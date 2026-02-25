@@ -36,5 +36,18 @@ public class ItemsServiceImpl implements ItemsService {
 				.filter(it->it.getTematica().equals(tematica))
 				.toList();
 	}
+	@Override
+	public boolean nuevoItem(Item item) {
+		//añade el nuevo Item a lista. No se admiten urls duplicadas. Antes de añadir
+		//hay que comprobar que no hay ningún otro Item con esa url. En caso de que lo haya
+		//no lo añade y devuelve false.
+		//si se consigue añadir, devolverá true
+		for(Item it:direcciones) {
+			if(it.getUrl().equals(item.getUrl())) {
+				return false;
+			}
+		}
+		return direcciones.add(item);
+	}
 
 }
