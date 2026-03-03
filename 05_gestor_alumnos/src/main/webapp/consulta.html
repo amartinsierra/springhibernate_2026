@@ -20,6 +20,7 @@
 				<td th:text="${a.nombre}"></td>
 				<td th:text="${a.email}"></td>
 				<td th:text="${a.nota}"></td>
+				<td><a th:href="@{eliminar(idAlumno=${a.idAlumno})}">Eliminar</a></td>
 			</tr>
 		</table>
 		<br>

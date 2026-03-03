@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import model.Alumno;
 @Repository
@@ -42,6 +43,26 @@ public class AlumnosRepositoryImpl implements AlumnosRepository {
 		String jpql="select distinct(a.curso) from Alumno a";
 		TypedQuery<String> query=eManager.createQuery(jpql,String.class);
 		return query.getResultList();
+	}
+	@Transactional
+	@Override
+	public void removeById(int idAlumno) {
+		/*String jpql="delete from Alumno a where a.idAlumno=?1";
+		Query query=eManager.createQuery(jpql);
+		query.setParameter(1, idAlumno);
+		query.executeUpdate();*/
+		Alumno a=eManager.find(Alumno.class, idAlumno);
+		if(a!=null) {
+			eManager.remove(a);
+		}
+	}
+
+	@Override
+	public double averageByCurso(String curso) {
+		String sql="select avg(nota) from alumnos where curso=?";
+		Query query=eManager.createNativeQuery(sql, Double.class);
+		query.setParameter(1, curso);
+		return (Double)query.getSingleResult();
 	}
 
 }

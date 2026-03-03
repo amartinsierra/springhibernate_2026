@@ -35,7 +35,7 @@ public class AlumnosController {
 	}
 	@GetMapping("alumnos")
 	public String verAlumnos(Model model,@RequestParam("curso") String curso) {
-		//!!!!falta algo
+		model.addAttribute("cursos", alumnosService.cursos());
 		model.addAttribute("alumnos", alumnosService.alumnosCurso(curso));
 		return "consulta";
 	}
@@ -46,6 +46,12 @@ public class AlumnosController {
 	}
 	@GetMapping({"/","goMenu"})
 	public String menu() {
+		return "menu";
+	}
+	
+	@GetMapping("eliminar")
+	public String eliminar(@RequestParam("idAlumno") int idAlumno) {
+		alumnosService.eliminar(idAlumno);
 		return "menu";
 	}
 }

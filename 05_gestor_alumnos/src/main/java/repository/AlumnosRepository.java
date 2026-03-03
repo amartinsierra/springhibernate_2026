@@ -9,4 +9,7 @@ public interface AlumnosRepository {
 	List<Alumno> findByCurso(String curso);
 	Alumno findByNombreAndCurso(String nombre, String curso);
 	List<String> findAllCursos();
+	void removeById(int idAlumno);
+	
+	double averageByCurso(String curso);
 }

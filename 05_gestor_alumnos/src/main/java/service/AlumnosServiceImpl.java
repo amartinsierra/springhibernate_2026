@@ -32,4 +32,10 @@ public class AlumnosServiceImpl implements AlumnosService {
 		return alumnosRepository.findAllCursos();
 	}
 
+	@Override
+	public void eliminar(int idAlumno) {
+		alumnosRepository.removeById(idAlumno);
+		
+	}
+
 }
