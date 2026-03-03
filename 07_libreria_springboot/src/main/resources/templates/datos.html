@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<center>
+		ISBN: <h2 th:text="${libro.isbn}"></h2>
+		Título:<h2 th:text="${libro.titulo}"></h2>
+		Autor:<h2 th:text="${libro.autor}"></h2>
+		Precio:<h2 th:text="${libro.precio}"></h2>
+		<a href="goMenu">Menu</a>
+	</center>
+</body>
+</html>
