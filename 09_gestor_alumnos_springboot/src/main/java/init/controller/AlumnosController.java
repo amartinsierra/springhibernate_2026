@@ -13,7 +13,7 @@ import init.service.AlumnosService;
 
 @Controller
 public class AlumnosController {
-	
+	@Autowired
 	AlumnosService alumnosService;
 	@PostMapping("alta")
 	/*public String alta(Model model,

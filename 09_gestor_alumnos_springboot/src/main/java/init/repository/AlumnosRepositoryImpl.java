@@ -22,7 +22,7 @@ public class AlumnosRepositoryImpl implements AlumnosRepository {
 
 	@Override
 	public List<Alumno> findByCurso(String curso) {
-		String jpql="select a from Alumno  where a.curso=?1";
+		String jpql="select a from Alumno a where a.curso=?1";
 		TypedQuery<Alumno> query=eManager.createQuery(jpql,Alumno.class);
 		query.setParameter(1, curso);
 		return query.getResultList();
