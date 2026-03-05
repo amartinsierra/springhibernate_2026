@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import init.model.Cliente;
 import init.service.ClientesService;
 import init.service.LibrosService;
+import jakarta.servlet.http.HttpSession;
 //@RequestMapping("clientes")
 @Controller
 public class LibreriaController {
@@ -21,10 +22,12 @@ public class LibreriaController {
 	LibrosService librosService;
 	
 	@GetMapping("login")
-	public String autenticar(Model model, @RequestParam("usuario") String usuario, 
+	public String autenticar(HttpSession sesion, Model model, @RequestParam("usuario") String usuario, 
 			@RequestParam("password") String password) {
 		Cliente cliente=clientesService.autenticarUsuario(usuario, password);
 		if(cliente!=null) {
+			//guardamos el nombre del usuario en la sesión
+			sesion.setAttribute("usuario", cliente.getUsuario());
 			model.addAttribute("temas", librosService.temas());
 			return "libros";
 		}else {
@@ -43,20 +46,13 @@ public class LibreriaController {
 	}
 	@GetMapping("libros")
 	public String verLibros(Model model, @RequestParam("temaSel") int idTemaSel) {
+		model.addAttribute("idTemaSel", idTemaSel);
 		model.addAttribute("temas", librosService.temas()); //para que no se pierdan al volver a la página
 		model.addAttribute("libros", librosService.librosTema(idTemaSel));
 		return "libros";
 	}
 	
 	
-	@GetMapping({"/","goLogin"})
-	public String inicio() {
-		return "login";
-	}
-	@GetMapping("goRegistro")
-	public String goRegistro() {
-		return "registro";
-	}
 	
 	
 }
