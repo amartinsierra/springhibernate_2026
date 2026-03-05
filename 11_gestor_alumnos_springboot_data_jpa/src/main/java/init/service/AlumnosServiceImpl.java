@@ -15,7 +15,7 @@ public class AlumnosServiceImpl implements AlumnosService {
 	public boolean guardar(Alumno alumno) {
 		//si no hay ningún alumno con esa combinación nombre/curso
 		//entonces lo añadimos
-		if(alumnosRepository.findByNombreAndCurso(alumno.getNombre(), alumno.getCurso())==null) {
+		if(alumnosRepository.findFirstByNombreAndCurso(alumno.getNombre(), alumno.getCurso())==null) {
 			alumnosRepository.save(alumno);
 			return true;
 		}
@@ -34,7 +34,7 @@ public class AlumnosServiceImpl implements AlumnosService {
 
 	@Override
 	public void eliminar(int idAlumno) {
-		alumnosRepository.removeById(idAlumno);
+		alumnosRepository.deleteById(idAlumno);
 		
 	}
 
