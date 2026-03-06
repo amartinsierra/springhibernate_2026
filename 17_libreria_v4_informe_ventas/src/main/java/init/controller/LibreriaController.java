@@ -121,8 +121,7 @@ public class LibreriaController {
 	public String informe(@RequestParam String fecha1, @RequestParam String fecha2) {		
 		LocalDateTime ld1=LocalDateTime.of(LocalDate.parse(fecha1),LocalTime.now());
 		LocalDateTime ld2=LocalDateTime.of(LocalDate.parse(fecha2),LocalTime.now());
-		System.out.println(ld1);
-		System.out.println(ld2);
+		
 		return "ventas";
 	}
 	

@@ -8,7 +8,7 @@ public class PageController {
 
 	@GetMapping({"/","goLogin"})
 	public String inicio() {
-		return "ventas";
+		return "login";
 	}
 	@GetMapping("goRegistro")
 	public String goRegistro() {
