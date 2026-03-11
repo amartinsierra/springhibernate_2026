@@ -1,0 +1,39 @@
+package init.service;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+
+import init.dtos.EstudianteDto;
+import init.mappers.Mapeador;
+import init.model.Alumno;
+@Service
+public class EstudiantesSrviceImpl implements EstudiantesService {
+	
+	@Autowired
+	RestClient restClient;
+	@Autowired
+	Mapeador mapeador;
+	
+	private String urlBase="http://localhost:8005/escuela/";
+
+	@Override
+	public List<EstudianteDto> estudiantesRangoCalificaciones(double min, double max) {
+		return Arrays.stream(restClient.get()
+				.uri(urlBase+"alumnos")
+				.retrieve()
+				.body(Alumno[].class))  //Stream<Alumno>
+				.map(a->mapeador.alumnoToEstudiante(a))//Stream<EstudianteDto>
+				.toList();
+	}
+
+	@Override
+	public boolean altaEstudiante(EstudianteDto estudiante) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}
