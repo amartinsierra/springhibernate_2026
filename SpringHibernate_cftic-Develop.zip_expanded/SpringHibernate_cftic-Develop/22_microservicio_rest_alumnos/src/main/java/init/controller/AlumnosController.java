@@ -3,6 +3,7 @@ package init.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +52,7 @@ public class AlumnosController {
 		if(!alumnosService.guardar(alumno)) {
 			return ResponseEntity.status(HttpStatusCode.valueOf(409)).build();
 		}
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	@DeleteMapping("alumnos")
 	public ResponseEntity<AlumnoDto> crearAlumno(@RequestParam String email) {
