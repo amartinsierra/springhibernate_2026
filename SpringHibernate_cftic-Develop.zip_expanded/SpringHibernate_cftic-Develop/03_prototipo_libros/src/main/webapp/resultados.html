@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:each="it:${lista}" align="center">
+		<h1 align="center">Libro:</h1><br>
+		<label>ISBN: </label>
+		<label th:text="${it.isbn}"></label><br>
+		<label>TITULO: </label>
+		<label th:text="${it.titulo}"></label><br>
+		<label>AUTOR: </label>
+		<label th:text="${it.autor}"></label><br>
+		<label>PRECIO: </label>
+		<label th:text="${it.precio}"></label><br>
+		<hr>
+	</div>
+	<div  align="center">
+	<label><a th:href="goMenu">Volver</a><</label>
+	</div>
+</body>
+</html>

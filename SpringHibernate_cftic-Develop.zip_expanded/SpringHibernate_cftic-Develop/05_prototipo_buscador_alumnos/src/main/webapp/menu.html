@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea, #0C1C2B);
+    }
+
+    .form-container {
+        background: #ffffff;
+        padding: 40px;
+        width: 350px;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+        width: 100%;
+        padding: 12px 10px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        outline: none;
+        font-size: 14px;
+        transition: 0.3s ease;
+        background: transparent;
+    }
+
+    .input-group label {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        color: #777;
+        font-size: 14px;
+        pointer-events: none;
+        transition: 0.3s ease;
+        background: white;
+        padding: 0 5px;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus,
+    .input-group select:focus {
+        border-color: #764ba2;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label,
+    .input-group textarea:focus + label,
+    .input-group textarea:not(:placeholder-shown) + label {
+        top: -8px;
+        left: 10px;
+        font-size: 11px;
+        color: #764ba2;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: #764ba2;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #5a3780;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="form-container">
+    <h2>Formulario</h2>
+
+    <div class="input-group">
+    	<form action="goBuscar" method="get">
+        	<input type="submit" value="Buscar">
+        </form>
+    </div>
+   
+    <div class="input-group">
+        <form action="goNuevo" method="get">
+        	<input type="submit" value="Nuevo">
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

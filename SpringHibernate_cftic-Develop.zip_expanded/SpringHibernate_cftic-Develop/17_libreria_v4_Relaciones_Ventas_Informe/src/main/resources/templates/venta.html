@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Consulta de compras</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    margin:0;
+    padding:40px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+h1{
+    text-align:center;
+}
+
+.form-grid{
+    display:flex;
+    gap:15px;
+    align-items:end;
+}
+
+.form-group{
+    flex:1;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:5px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    background:#2c7be5;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1a5fc1;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+}
+
+th{
+    background:#f0f2f5;
+}
+
+tr:hover{
+    background:#f9fbff;
+}
+
+.empty{
+    text-align:center;
+    padding:20px;
+    color:#666;
+}
+.footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); font-size:0.8125rem; color:var(--text-muted);}
+
+
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #6c757d; /* gris neutro */
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background 0.3s;
+}
+
+.btn-back:hover {
+    background: #5a6268; /* gris más oscuro al pasar el mouse */
+}
+
+</style>
+
+</head>
+
+<body>
+
+	<div class="container">
+	
+		<h1>Consulta de compras</h1>
+		
+		<div class="card">
+		
+			<form action="/checkByDates" method="GET">
+			
+			<div class="form-grid">
+			
+			<div class="form-group">
+			<label for="f1">Fecha inicio</label>
+			<input type="date" id="f1" name="f1" required>
+			</div>
+			
+			<div class="form-group">
+			<label for="f2">Fecha fin</label>
+			<input type="date" id="f2" name="f2" required>
+			</div>
+			
+			<div>
+			<button type="submit">Buscar</button>
+			</div>
+			
+			</div>
+			
+			</form>
+	
+		</div>
+	
+		
+		<div class="card">
+		
+			<h2>Resultados</h2>
+		
+			<table th:if="${compras != null and !compras.isEmpty()}">
+			<span class="user-badge" th:if="${session != null and session.user != null}" th:text="'Usuario: ' + ${session.user.usuario}">Usuario</span>
+			<thead>
+			<tr>
+			<th>Libro</th>
+			<th>Fecha</th>
+			<th>Tema</th>
+			<th>Precio</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			
+			<tr th:each="c : ${compras}">
+			<td th:text="${c.libro.titulo}"></td>
+			<td th:text="${#temporals.format(c.fecha,'dd//MM//yyyy')}"></td>
+			<td th:text="${c.libro.temaRelacionado.tema}"></td>
+			<td th:text="${c.libro.precio}"></td>
+			</tr>
+			
+			</tbody>
+		
+		</table>
+	
+		
+		<div class="empty" th:if="${compras == null or compras.isEmpty()}">
+			No hay resultados para las fechas seleccionadas.
+		</div>
+		<a href="buscarLibro" class="btn-back">Volver</a>
+	
+	</div>
+    <p class="footer">© Luis · Backend Java Developer</p>
+</div>
+</body>
+</html>

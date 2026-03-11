@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div style= align:center>
+	<form th:action="crear" method="post">
+	<label>isbn:</label><br>
+		<input type="text" name="isbn"/><br>
+	<label>titulo</label><br>
+		<input type="text" name="titulo"/><br>
+	<label>autor</label><br>
+		<input type="text" name="autor"/><br>
+	<label>precio</label><br>
+	<input type="text" name="precio"/><br>
+	
+	<input type="submit" value="crear">
+	<h2><a th:href="goMenu"/>volver</h2>
+	</form>	
+</div>
+</body>
+</html>

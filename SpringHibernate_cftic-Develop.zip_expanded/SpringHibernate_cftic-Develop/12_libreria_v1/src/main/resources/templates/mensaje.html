@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Listado de Items</title>
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 80%;
+        margin: 40px auto;
+        text-align: center;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 20px auto;
+        width: 60%;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+    h1 {
+        color: #2e59d9;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: white;
+    }
+
+    .label-title {
+        font-weight: bold;
+        color: #4e73df;
+    }
+
+    .message {
+        margin-top: 30px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #f6c23e;
+        color: #000;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #dda20a;
+        color: white;
+    }
+
+    hr {
+        border: none;
+        height: 1px;
+        background-color: #eee;
+        margin-top: 15px;
+    }
+</style>
+
+</head>
+<body>
+<h2 th:text="${session.user}" style="
+        font-size: 2.5em;
+        color: #fff;
+        text-align: center;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        margin: 30px 0;
+        letter-spacing: 1px;
+    "></h2>
+
+<div class="container">
+
+    <div th:each="it : ${lista}" class="card">
+        <h1>Libro</h1>
+
+        <p><span class="label-title">ISBN:</span> 
+            <span th:text="${it.isbn}"></span>
+        </p>
+
+        <p><span class="label-title">Título:</span> 
+            <span th:text="${it.titulo}"></span>
+        </p>
+
+        <p><span class="label-title">Autor:</span> 
+            <span th:text="${it.autor}"></span>
+        </p>
+        <p><span class="label-title">Precio:</span> 
+            <span th:text="${it.precio}"></span>
+        </p>
+        <p><span class="label-title">Páginas:</span> 
+            <span th:text="${it.paginas}"></span>
+        </p>
+    </div>
+
+    <div class="message">
+        <h2>API RESPONSE</h2>
+        <p th:text="${mensaje}"></p>
+    </div>
+
+    <a th:href="@{/goSearchLibro}" class="btn">Volver a Búsqueda</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo · Librería</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg:#f8fafc; --surface:#fff; --border:#e2e8f0; --text:#1e293b; --text-muted:#64748b;
+            --primary:#0f172a; --primary-hover:#334155; --accent:#0ea5e9; --accent-hover:#0284c7;
+            --danger:#dc2626; --danger-hover:#b91c1c; --radius:8px; --shadow:0 1px 3px rgba(15,23,42,0.06);
+            --shadow-lg:0 4px 12px rgba(15,23,42,0.08);}
+        * { box-sizing: border-box; }
+        body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); margin:0; min-height:100vh;}
+        .header { background:var(--primary); color:#fff; padding:1.5rem 2rem; box-shadow:var(--shadow-lg); }
+        .header h1 { margin:0; font-size:1.35rem; font-weight:600; letter-spacing:-0.02em; }
+        .header .subtitle { margin:0.25rem 0 0; font-size:0.875rem; color:#94a3b8; }
+        .main { max-width:960px; margin:0 auto; padding:2rem; }
+        .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; margin-bottom:2rem; }
+        .card-header { padding:1rem 1.5rem; border-bottom:1px solid var(--border); background:#fafafa; font-weight:600; font-size:0.9375rem; color:var(--text);}
+        .card-body { padding:0; }
+        .card-body-inner { padding:1.25rem 1.5rem; }
+        .btn { display:inline-block; padding:0.5rem 1rem; font-size:0.8125rem; font-weight:500; font-family:inherit; border:none; border-radius:6px; cursor:pointer; transition:background 0.15s, color 0.15s; }
+        .btn-primary { background:var(--primary); color:#fff; }
+        .btn-primary:hover { background:var(--primary-hover); color:#fff; }
+        .btn-outline { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+        .btn-outline:hover { background:#f1f5f9; color:var(--danger); border-color:#fecaca; }
+        table { width:100%; border-collapse:collapse; font-size:0.9375rem; }
+        th { text-align:left; padding:0.875rem 1.25rem; font-weight:600; color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; background:#f8fafc; border-bottom:1px solid var(--border);}
+        td { padding:1rem 1.25rem; border-bottom:1px solid var(--border); vertical-align:middle; }
+        tr:last-child td { border-bottom:none; }
+        tr:hover td { background:#fafafa; }
+        .id-col { width:5rem; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+        .precio-col { font-variant-numeric:tabular-nums; font-weight:500; }
+        .num-col { font-variant-numeric:tabular-nums; }
+        .accion-col { width:10rem; text-align:right; }
+        .carrito-section .card-header { display:flex; align-items:center; justify-content:space-between; }
+        .carrito-badge { background:var(--accent); color:#fff; font-size:0.75rem; font-weight:500; padding:0.25rem 0.5rem; border-radius:4px; }
+        .footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); font-size:0.8125rem; color:var(--text-muted);}
+        .select-bonito { width:100%; max-width:320px; padding:0.625rem 1rem; border-radius:6px; border:1px solid var(--border); font-size:0.9375rem; font-family:inherit; background:var(--surface); color:var(--text); cursor:pointer; }
+        .btn-form { margin-top:1rem; padding:0.5rem 1.25rem; border:none; border-radius:6px; background:var(--accent); color:#fff; font-size:0.875rem; font-weight:500; font-family:inherit; cursor:pointer; }
+        .btn-form:hover { background:var(--accent-hover); }
+    </style>
+</head>
+<body>
+<header class="header">
+    <h1>Catálogo de Libros</h1>
+    <p class="subtitle">Selecciona un tema para filtrar y añade los artículos al carrito.</p>
+    <span class="user-badge" th:if="${session != null and session.user != null}" th:text="'Usuario: ' + ${session.user}">Usuario</span>
+</header>
+
+<main class="main">
+
+    <!-- Buscar por tema -->
+	<section class="card" th:if="${session.temas != null}">
+	    <div class="card-header">Buscar por tema</div>
+	    <div class="card-body-inner">
+	        <form th:action="@{/findBookByTheme}" method="get">
+	            <select name="idTemaSel" class="select-bonito">
+	                <option value="0" th:selected="${idTemaSel == 0}">-Buscar Todos-</option>
+	                <option th:each="c : ${session.temas}" 
+	                        th:value="${c.idTema}" 
+	                        th:text="${c.tema}" 
+	                        th:selected="${idTemaSel == c.idTema}">
+	                </option>
+	            </select><br><br>
+	            <input type="submit" value="Search" class="btn-form">
+	        </form>
+	    </div>
+	</section>
+
+    <!-- Libros disponibles -->
+    <section class="card" th:if="${lista != null}">
+        <div class="card-header">Libros disponibles</div>
+        <div class="card-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="id-col">ISBN</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th class="precio-col">Precio</th>
+                        <th class="num-col">Páginas</th>
+                        <th class="accion-col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${lista}">
+                        <td class="id-col" th:text="${item.isbn}"></td>
+                        <td th:text="${item.titulo}"></td>
+                        <td th:text="${item.autor}"></td>
+                        <td class="precio-col" th:text="${#numbers.formatDecimal(item.precio,1,2)} + ' €'"></td>
+                        <td class="num-col" th:text="${item.paginas}"></td>
+                        <td class="accion-col">
+                            <form th:action="@{/añadirCarrito}" method="post">
+                                <input type="hidden" th:name="isbn" th:value="${item.isbn}">
+                                <input type="hidden" th:name="idTemaSel" th:value="${item.idTema}">
+                                <button type="submit" class="btn btn-primary">Añadir a carrito</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Carrito -->
+    <section class="card carrito-section" th:if="${session.carrito != null and !session.carrito.isEmpty()}">
+        <div class="card-header">
+            <span>Carrito de la compra</span>
+            <span class="carrito-badge" th:text="|${#lists.size(session.carrito)} artículo(s)|"></span>
+        </div>
+        <div class="card-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="id-col">ISBN</th>
+                        <th>Título</th>
+                        <th class="precio-col">Precio</th>
+                        <th class="accion-col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="linea : ${session.carrito}">
+                        <td class="id-col" th:text="${linea.isbn}"></td>
+                        <td th:text="${linea.titulo}"></td>
+                        <td class="precio-col" th:text="${#numbers.formatDecimal(linea.precio,1,2)} + ' €'"></td>
+                        <td class="accion-col">
+                            <form th:action="@{/quitarCarrito}" method="post">
+                                <input type="hidden" th:name="isbn" th:value="${linea.isbn}">
+                                <input type="hidden" th:name="idTemaSel" th:value="${linea.idTema}">
+                                <button type="submit" class="btn btn-outline">Quitar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <p class="footer">© Luis · Backend Java Developer</p>
+</main>
+</body>
+</html>

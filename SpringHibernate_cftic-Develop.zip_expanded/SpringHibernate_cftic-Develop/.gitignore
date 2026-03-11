@@ -1,0 +1,40 @@
+# =========================
+# Compilados Java
+# =========================
+*.class
+bin/
+target/
+out/
+
+# =========================
+# Eclipse
+# =========================
+.metadata/
+*.launch
+*.tmp
+*.bak
+*.swp
+
+# ⚠️ IMPORTANTE:
+# Solo ignora .classpath y .project si no son necesarios
+.classpath
+.project
+.settings/
+
+# =========================
+# Servers (Tomcat)
+# =========================
+Servers/
+tmp/
+work/
+
+# =========================
+# IDEs
+# =========================
+.idea/
+*.iml
+
+# =========================
+# Logs
+# =========================
+*.log

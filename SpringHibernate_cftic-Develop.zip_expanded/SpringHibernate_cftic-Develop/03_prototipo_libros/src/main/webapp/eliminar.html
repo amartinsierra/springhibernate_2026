@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div style= align:center>
+	<form th:action="delLibro" method="delete">
+	<label>isbn:</label><br>
+		<input type="text" name="isbn"/><br>
+	<input type="submit" value="eliminar">
+	<h2><a th:href="goMenu"/>volver</h2>
+	</form>	
+</div>
+</body>
+</html>

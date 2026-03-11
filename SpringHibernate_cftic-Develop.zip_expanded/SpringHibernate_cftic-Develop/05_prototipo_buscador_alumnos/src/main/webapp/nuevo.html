@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div style= align:center>
+	<form th:action="goSaveAlumno" method="post">
+	<label>nombre:</label><br>
+		<input type="text" name="name"/><br>
+	<label>curso</label><br>
+		<input type="text" name="course"/><br>
+	<label>email</label><br>
+		<input type="text" name="email"/><br>
+	<label>nota</label><br>
+		<input type="text" name="nota"/><br>
+	<input type="submit" value="crear">
+	<h2><a th:href="goMenu"/>volver</h2>
+	</form>	
+</div>
+</body>
+</html>

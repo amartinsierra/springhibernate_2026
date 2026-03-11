@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Libro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-container label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            text-align: left;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .form-container a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 8px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Crear Libro</h1>
+        <form th:action="@{/goCreate}" method="post">
+            <label>url:</label>
+            <input type="text" name="url" />
+
+            <label>Título:</label>
+            <input type="text" name="tematica" />
+
+            <label>Autor:</label>
+            <input type="text" name="descripcion" />
+            <input type="submit" value="Crear" />
+
+            <br/>
+            <a th:href="@{/goMenu}">Volver</a>
+        </form>
+    </div>
+
+</body>
+</html>

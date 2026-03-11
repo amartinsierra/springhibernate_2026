@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Formulario País</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    padding:40px;
+}
+
+.container{
+    max-width:320px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    color:#333;
+}
+
+.select-bonito{
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:14px;
+    background:white;
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.select-bonito:hover{
+    border-color:#3b82f6;
+}
+
+.select-bonito:focus{
+    outline:none;
+    border-color:#3b82f6;
+    box-shadow:0 0 5px rgba(59,130,246,0.4);
+}
+
+button{
+    margin-top:12px;
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#3b82f6;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#2563eb;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<form th:action="@{findBookByTheme}" method="get">
+
+    <label for="tema">Selecciona un Tema</label>
+
+    <select id="idTema" name="idTema" class="select-bonito">
+
+        <!-- opción por defecto -->
+        <option name="idTema" value="0">
+            -- Selecciona un Tema --
+        </option>
+
+        <!-- opciones cargadas desde backend -->
+        <option th:each="li : ${lista}"
+                th:value="${li.idTema}"
+                th:name="tema"
+                th:text="${li.tema}">
+        </option>
+    </select>
+
+    <button type="submit">Enviar</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

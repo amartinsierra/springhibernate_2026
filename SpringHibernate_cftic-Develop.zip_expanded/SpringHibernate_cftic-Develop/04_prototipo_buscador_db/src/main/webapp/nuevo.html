@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div style= align:center>
+	<form th:action="goCreate" method="post">
+	<label>url:</label><br>
+		<input type="text" name="url"/><br>
+	<label>tematica</label><br>
+		<input type="text" name="tematica"/><br>
+	<label>descripcion</label><br>
+		<input type="text" name="descripcion"/><br>
+	
+	<input type="submit" value="crear">
+	<h2><a th:href="goMenu"/>volver</h2>
+	</form>	
+</div>
+</body>
+</html>

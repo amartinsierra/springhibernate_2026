@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Libro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .libro-container {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            width: 400px;
+        }
+
+        .libro-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .libro-container label {
+            display: inline-block;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .libro-container span {
+            margin-left: 5px;
+            color: #333;
+        }
+
+        hr {
+            margin-top: 15px;
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+
+        .volver {
+            margin-top: 20px;
+        }
+
+        .volver a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 8px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .volver a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div th:each="it : ${lista}" class="libro-container">
+        <h1>Libro</h1>
+        <p><label>ISBN:</label><span th:text="${it.isbn}"></span></p>
+        <p><label>Título:</label><span th:text="${it.titulo}"></span></p>
+        <p><label>Autor:</label><span th:text="${it.autor}"></span></p>
+        <p><label>Precio:</label><span th:text="${it.precio}"></span></p>
+    </div>
+
+    <div class="volver">
+        <a th:href="@{/goMenu}">Volver</a>
+    </div>
+
+</body>
+</html>
