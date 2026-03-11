@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<center>
+		<form action="informe" method="get">
+			<input type="date" name="fecha1">&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" name="fecha2">
+			<br><br>
+			<input type="submit" value="Informe">
+			<br><br>
+			<div th:if="${ventas}">
+				<table border="1">
+					<tr><th>Usuario</th><th>Libro</th><th>Fecha</th>
+					<tr th:each="v:${ventas}">
+						<td th:text="${v.cliente.usuario}"></td>
+						<td th:text="${v.libro.titulo}"></td>
+						<td th:text="${#temporals.format(v.fecha,'dd/MM/yyyy')}"></td>
+					</tr>
+				
+				</table>
+			</div>
+			<br><br><a href="goLogin">Volver</a>
+		</form>
+	</center>
+</body>
+</html>
