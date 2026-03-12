@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 import init.dtos.EstudianteDto;
@@ -27,13 +30,26 @@ public class EstudiantesSrviceImpl implements EstudiantesService {
 				.retrieve()
 				.body(Alumno[].class))  //Stream<Alumno>
 				.map(a->mapeador.alumnoToEstudiante(a))//Stream<EstudianteDto>
+				.filter(e->e.getCalificacion()>=min&&e.getCalificacion()<=max)
 				.toList();
 	}
 
 	@Override
 	public boolean altaEstudiante(EstudianteDto estudiante) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			restClient.post()
+			.uri(urlBase+"alumnos")
+			.contentType(MediaType.APPLICATION_JSON)
+			.body(mapeador.estudianteToAlumno(estudiante))
+			.retrieve()
+			.toBodilessEntity();
+			return true;
+		}catch(HttpClientErrorException ex) {
+			if(ex.getStatusCode()==HttpStatus.CONFLICT) {
+				return false;
+			}
+			throw ex;
+		}
 	}
 
 }
