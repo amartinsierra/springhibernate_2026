@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
+import feign.FeignException;
+import init.clients.AlumnosFeign;
 import init.dtos.EstudianteDto;
 import init.mappers.Mapeador;
 import init.model.Alumno;
@@ -21,32 +22,25 @@ public class EstudiantesSrviceImpl implements EstudiantesService {
 	RestClient restClient;
 	@Autowired
 	Mapeador mapeador;
-	@Value("${remote.url}")
-	private String urlBase;
+	
+	@Autowired
+	AlumnosFeign alumnosFeign;
 
 	@Override
 	public List<EstudianteDto> estudiantesRangoCalificaciones(double min, double max) {
-		return Arrays.stream(restClient.get()
-				.uri(urlBase+"alumnos")
-				.retrieve()
-				.body(Alumno[].class))  //Stream<Alumno>
+		return alumnosFeign.alumnos().stream()
 				.map(a->mapeador.alumnoToEstudiante(a))//Stream<EstudianteDto>
 				.filter(e->e.getCalificacion()>=min&&e.getCalificacion()<=max)
 				.toList();
 	}
 
 	@Override
-	public boolean altaEstudiante(EstudianteDto estudiante) {
+	public boolean altaEstudiante(EstudianteDto estudiante) {	
 		try {
-			restClient.post()
-			.uri(urlBase+"alumnos")
-			.contentType(MediaType.APPLICATION_JSON)
-			.body(mapeador.estudianteToAlumno(estudiante))
-			.retrieve()
-			.toBodilessEntity();
+			alumnosFeign.nuevoAlumno(mapeador.estudianteToAlumno(estudiante));
 			return true;
-		}catch(HttpClientErrorException ex) {
-			if(ex.getStatusCode()==HttpStatus.CONFLICT) {
+		}catch(FeignException ex) {
+			if(ex.status()==409) {
 				return false;
 			}
 			throw ex;
